@@ -4,6 +4,8 @@
   background: #f0f2f5;
   color: #1a1a2e;
   transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .app--dark {
@@ -18,6 +20,8 @@
   flex-direction: column;
   min-height: 100vh;
   transition: margin-left 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .app__content {
@@ -30,5 +34,85 @@
 @media (max-width: 768px) {
   .app__main {
     margin-left: 0;
+  }
+}
+
+/* Background Battle overlay for PUBG style scanline/grid/fog */
+.battle-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(rgba(10, 14, 23, 0.05) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(245, 166, 35, 0.01), rgba(0,0,0,0));
+  background-size: 100% 4px, 6px 100%;
+  opacity: 0.4;
+}
+
+.app--dark .battle-bg-overlay {
+  background: linear-gradient(rgba(245, 166, 35, 0.02) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(245, 166, 35, 0.02), rgba(0, 0, 0, 0.05));
+  background-size: 100% 4px, 8px 100%;
+  opacity: 0.7;
+}
+
+/* Battle Particles Container */
+.battle-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.battle-particle {
+  position: absolute;
+  bottom: -20px;
+  background: rgba(245, 166, 35, 0.3);
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: floatUp 12s infinite linear;
+  box-shadow: 0 0 8px var(--primary);
+  opacity: 0;
+}
+
+/* Specific particles with varying sizes, offsets, and delays */
+.battle-particle:nth-child(1) { left: 10%; width: 6px; height: 6px; animation-duration: 14s; animation-delay: 0s; }
+.battle-particle:nth-child(2) { left: 25%; width: 10px; height: 10px; animation-duration: 18s; animation-delay: 2s; background: rgba(245, 166, 35, 0.15); }
+.battle-particle:nth-child(3) { left: 40%; width: 8px; height: 8px; animation-duration: 15s; animation-delay: 5s; }
+.battle-particle:nth-child(4) { left: 55%; width: 12px; height: 12px; animation-duration: 20s; animation-delay: 1s; background: rgba(245, 166, 35, 0.2); }
+.battle-particle:nth-child(5) { left: 70%; width: 5px; height: 5px; animation-duration: 12s; animation-delay: 7s; }
+.battle-particle:nth-child(6) { left: 85%; width: 9px; height: 9px; animation-duration: 16s; animation-delay: 3s; }
+.battle-particle:nth-child(7) { left: 95%; width: 11px; height: 11px; animation-duration: 19s; animation-delay: 6s; }
+.battle-particle:nth-child(8) { left: 18%; width: 7px; height: 7px; animation-duration: 13s; animation-delay: 4s; }
+
+/* Light mode adjustments: make particles look like grey ash/smoke drift */
+.app:not(.app--dark) .battle-particle {
+  background: rgba(100, 110, 130, 0.15);
+  box-shadow: 0 0 6px rgba(100, 110, 130, 0.1);
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(30px) scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(-20px) scale(0.8) rotate(360deg);
+    opacity: 0;
   }
 }

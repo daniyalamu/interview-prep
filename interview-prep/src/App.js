@@ -20,6 +20,17 @@ function AppContent() {
 
   return (
     <div className={`app ${darkMode ? 'app--dark' : ''}`}>
+      <div className="battle-bg-overlay" />
+      <div className="battle-particles">
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+        <div className="battle-particle" />
+      </div>
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="app__main">
         <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />

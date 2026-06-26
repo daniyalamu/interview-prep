@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { getAllQuestions } from '../data/topics';
 import { FiSearch, FiMenu } from 'react-icons/fi';
-import { GiHelmet } from 'react-icons/gi';
+import { GiCrosshair } from 'react-icons/gi';
 import '../styles/header.css';
 
 function Header({ onMenuToggle }) {
@@ -65,7 +65,12 @@ function Header({ onMenuToggle }) {
 
       <div className="header__profile">
         <div className="header__avatar">
-          <GiHelmet />
+          <img
+            src={process.env.PUBLIC_URL + '/profile.png'}
+            alt="Profile"
+            className="header__avatar-img"
+          />
+          <GiCrosshair className="header__avatar-scope" />
         </div>
       </div>
     </header>
