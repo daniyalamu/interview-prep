@@ -3,12 +3,14 @@ import DifficultyBadge from './DifficultyBadge';
 import { useFavorites } from '../context/FavoritesContext';
 import { useProgress } from '../context/ProgressContext';
 import { useTheme } from '../context/ThemeContext';
+import { getHinglishQuestion } from '../utils/helpers';
 import { GiCrosshair, GiTrophy } from 'react-icons/gi';
-import { FiChevronLeft, FiChevronRight, FiHeart } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiHeart, FiGlobe } from 'react-icons/fi';
 import { RiSwordFill } from 'react-icons/ri';
 
 function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext }) {
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isHinglish, setIsHinglish] = useState(false);
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const { markViewed } = useProgress();
   const { darkMode } = useTheme();
@@ -17,6 +19,7 @@ function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext })
     if (question) {
       markViewed(question);
       setShowAnswer(false);
+      setIsHinglish(false);
     }
     // eslint-disable-next-line
   }, [question]);
@@ -42,10 +45,14 @@ function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext })
     }
   };
 
+  const displayedQuestion = isHinglish
+    ? getHinglishQuestion(question.topicId, question.id, question)
+    : question;
+
   return (
     <div className={`question-details ${darkMode ? 'dark' : ''}`}>
       <div className="question-details__header">
-        <h2 className="question-details__title">{question.question}</h2>
+        <h2 className="question-details__title">{displayedQuestion.question}</h2>
         <button
           className={`question-details__fav-btn ${favorite ? 'question-details__fav-btn--active' : ''}`}
           onClick={handleFavoriteToggle}
@@ -57,6 +64,12 @@ function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext })
 
       <div className="question-details__meta">
         <DifficultyBadge difficulty={question.difficulty} />
+        <button
+          className={`question-details__hinglish-btn ${isHinglish ? 'question-details__hinglish-btn--active' : ''}`}
+          onClick={() => setIsHinglish(!isHinglish)}
+        >
+          <FiGlobe /> {isHinglish ? 'English' : 'Hinglish'}
+        </button>
         <button className="question-details__mark-fav" onClick={handleFavoriteToggle}>
           <GiTrophy /> {favorite ? 'Looted' : 'Add to Loot'}
         </button>
@@ -66,7 +79,7 @@ function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext })
         <h3 className="question-details__section-title">
           <GiCrosshair /> INTEL
         </h3>
-        <p className="question-details__text">{question.question}</p>
+        <p className="question-details__text">{displayedQuestion.question}</p>
       </div>
 
       {!showAnswer ? (
@@ -79,16 +92,16 @@ function QuestionDetails({ question, onPrevious, onNext, hasPrevious, hasNext })
             <h3 className="question-details__section-title question-details__section-title--answer">
               <RiSwordFill /> DECODED
             </h3>
-            <p className="question-details__text">{question.answer}</p>
+            <p className="question-details__text">{displayedQuestion.answer}</p>
           </div>
 
-          {question.keyPoints && question.keyPoints.length > 0 && (
+          {displayedQuestion.keyPoints && displayedQuestion.keyPoints.length > 0 && (
             <div className="question-details__section question-details__key-points">
               <h3 className="question-details__section-title question-details__section-title--key">
                 <GiTrophy /> KEY LOOT
               </h3>
               <ul className="question-details__points-list">
-                {question.keyPoints.map((point, idx) => (
+                {displayedQuestion.keyPoints.map((point, idx) => (
                   <li key={idx} className="question-details__point">{point}</li>
                 ))}
               </ul>

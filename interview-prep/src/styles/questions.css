@@ -262,6 +262,34 @@
   background: rgba(245, 166, 35, 0.1);
 }
 
+.question-details__hinglish-btn {
+  background: none;
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  border-radius: var(--radius);
+  padding: 5px 14px;
+  font-size: 13px;
+  font-family: 'Rajdhani', sans-serif;
+  cursor: pointer;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.question-details__hinglish-btn:hover {
+  background: rgba(245, 166, 35, 0.1);
+  box-shadow: var(--glow);
+}
+
+.question-details__hinglish-btn--active {
+  background: var(--primary) !important;
+  color: #000 !important;
+  border-color: var(--primary) !important;
+  box-shadow: var(--glow);
+  font-weight: 600;
+}
+
 .question-details__section {
   margin-bottom: 22px;
 }

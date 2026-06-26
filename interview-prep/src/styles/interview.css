@@ -179,6 +179,42 @@
   margin-bottom: 20px;
 }
 
+.interview-mode__card-meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.interview-mode__hinglish-btn {
+  background: none;
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  border-radius: var(--radius);
+  padding: 5px 12px;
+  font-size: 13px;
+  font-family: 'Rajdhani', sans-serif;
+  cursor: pointer;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  text-transform: none;
+}
+
+.interview-mode__hinglish-btn:hover {
+  background: rgba(245, 166, 35, 0.1);
+  box-shadow: var(--glow);
+}
+
+.interview-mode__hinglish-btn--active {
+  background: var(--primary) !important;
+  color: #000 !important;
+  border-color: var(--primary) !important;
+  box-shadow: var(--glow);
+  font-weight: 600;
+}
+
 .interview-mode__topic {
   font-size: 12px;
   color: var(--primary);

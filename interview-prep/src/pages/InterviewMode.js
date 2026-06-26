@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import DifficultyBadge from '../components/DifficultyBadge';
 import { getAllQuestions } from '../data/topics';
+import { getHinglishQuestion } from '../utils/helpers';
 import { shuffleArray } from '../utils/helpers';
 import { useTheme } from '../context/ThemeContext';
 import { RiSwordFill } from 'react-icons/ri';
 import { GiCrosshair, GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
-import { FiChevronLeft, FiChevronRight, FiEye } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiEye, FiGlobe } from 'react-icons/fi';
 import '../styles/interview.css';
 
 function InterviewMode() {
@@ -13,6 +14,7 @@ function InterviewMode() {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isHinglish, setIsHinglish] = useState(false);
   const [difficulty, setDifficulty] = useState('All');
   const [isStarted, setIsStarted] = useState(false);
 
@@ -29,6 +31,7 @@ function InterviewMode() {
     setQuestions(shuffleArray(allQuestions));
     setCurrentIndex(0);
     setShowAnswer(false);
+    setIsHinglish(false);
     setIsStarted(true);
   };
 
@@ -36,6 +39,7 @@ function InterviewMode() {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
+      setIsHinglish(false);
     }
   };
 
@@ -43,6 +47,7 @@ function InterviewMode() {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setShowAnswer(false);
+      setIsHinglish(false);
     }
   };
 
@@ -50,6 +55,7 @@ function InterviewMode() {
     setQuestions(shuffleArray(questions));
     setCurrentIndex(0);
     setShowAnswer(false);
+    setIsHinglish(false);
   };
 
   if (!isStarted || questions.length === 0) {
@@ -80,6 +86,9 @@ function InterviewMode() {
   }
 
   const currentQuestion = questions[currentIndex];
+  const displayedQuestion = isHinglish
+    ? getHinglishQuestion(currentQuestion.topicId, currentQuestion.id, currentQuestion)
+    : currentQuestion;
 
   return (
     <div className={`interview-mode ${darkMode ? 'dark' : ''}`}>
@@ -117,10 +126,18 @@ function InterviewMode() {
       <div className="interview-mode__card">
         <div className="interview-mode__card-header">
           <span className="interview-mode__topic">{currentQuestion.topicName}</span>
-          <DifficultyBadge difficulty={currentQuestion.difficulty} />
+          <div className="interview-mode__card-meta">
+            <button
+              className={`interview-mode__hinglish-btn ${isHinglish ? 'interview-mode__hinglish-btn--active' : ''}`}
+              onClick={() => setIsHinglish(!isHinglish)}
+            >
+              <FiGlobe /> {isHinglish ? 'English' : 'Hinglish'}
+            </button>
+            <DifficultyBadge difficulty={currentQuestion.difficulty} />
+          </div>
         </div>
 
-        <h2 className="interview-mode__question">{currentQuestion.question}</h2>
+        <h2 className="interview-mode__question">{displayedQuestion.question}</h2>
 
         {!showAnswer ? (
           <button className="interview-mode__reveal-btn" onClick={() => setShowAnswer(true)}>
@@ -129,12 +146,12 @@ function InterviewMode() {
         ) : (
           <div className="interview-mode__answer">
             <h3><RiSwordFill /> DECODED:</h3>
-            <p>{currentQuestion.answer}</p>
-            {currentQuestion.keyPoints && (
+            <p>{displayedQuestion.answer}</p>
+            {displayedQuestion.keyPoints && (
               <div className="interview-mode__key-points">
                 <h4><GiCrosshair /> Key Loot:</h4>
                 <ul>
-                  {currentQuestion.keyPoints.map((point, idx) => (
+                  {displayedQuestion.keyPoints.map((point, idx) => (
                     <li key={idx}>{point}</li>
                   ))}
                 </ul>

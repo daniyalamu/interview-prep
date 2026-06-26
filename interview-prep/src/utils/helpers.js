@@ -24,3 +24,15 @@ export function getDifficultyBg(difficulty) {
     default: return 'rgba(136, 146, 164, 0.1)';
   }
 }
+
+export function getHinglishQuestion(topicId, questionId, defaultQuestionObj) {
+  if (defaultQuestionObj.questionHi) {
+    return {
+      ...defaultQuestionObj,
+      question: defaultQuestionObj.questionHi,
+      answer: defaultQuestionObj.answerHi || defaultQuestionObj.answer,
+      keyPoints: defaultQuestionObj.keyPointsHi || defaultQuestionObj.keyPoints
+    };
+  }
+  return defaultQuestionObj;
+}
