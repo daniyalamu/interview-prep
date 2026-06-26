@@ -8,6 +8,7 @@ import TopicQuestions from './pages/TopicQuestions';
 import Favorites from './pages/Favorites';
 import InterviewMode from './pages/InterviewMode';
 import Settings from './pages/Settings';
+import Notes from './pages/Notes';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ProgressProvider } from './context/ProgressContext';
@@ -29,6 +30,7 @@ function AppContent() {
             <Route path="/topic/:id" component={TopicQuestions} />
             <Route path="/favorites" component={Favorites} />
             <Route path="/interview" component={InterviewMode} />
+            <Route path="/notes" component={Notes} />
             <Route path="/settings" component={Settings} />
           </Switch>
         </main>

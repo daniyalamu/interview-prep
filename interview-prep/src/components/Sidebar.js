@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { GiCrosshair, GiTrophy, GiMilitaryFort, GiAmmoBox, GiSettingsKnobs } from 'react-icons/gi';
+import { GiCrosshair, GiTrophy, GiMilitaryFort, GiAmmoBox, GiSettingsKnobs, GiBookmark } from 'react-icons/gi';
 import { RiSwordFill } from 'react-icons/ri';
 import { BsSunFill, BsMoonStarsFill } from 'react-icons/bs';
 import '../styles/sidebar.css';
@@ -39,6 +39,10 @@ function Sidebar({ isOpen, onClose }) {
           <NavLink to="/interview" className="sidebar__link" activeClassName="sidebar__link--active" onClick={onClose}>
             <RiSwordFill className="sidebar__link-icon" />
             <span>Battle Mode</span>
+          </NavLink>
+          <NavLink to="/notes" className="sidebar__link" activeClassName="sidebar__link--active" onClick={onClose}>
+            <GiBookmark className="sidebar__link-icon" />
+            <span>DSA Notes</span>
           </NavLink>
           <NavLink to="/settings" className="sidebar__link" activeClassName="sidebar__link--active" onClick={onClose}>
             <GiSettingsKnobs className="sidebar__link-icon" />
