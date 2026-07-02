@@ -1,15 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { FaReact } from 'react-icons/fa';
-import { SiJavascript, SiCss3, SiHtml5 } from 'react-icons/si';
+import { FaReact, FaJava, FaGitAlt } from 'react-icons/fa';
+import { SiJavascript, SiCss3, SiHtml5, SiMysql, SiSpringboot } from 'react-icons/si';
 import { GiAmmoBox } from 'react-icons/gi';
 
 const topicIcons = {
   react: <FaReact />,
   javascript: <SiJavascript />,
   html: <SiHtml5 />,
-  css: <SiCss3 />
+  css: <SiCss3 />,
+  java: <FaJava />,
+  springboot: <SiSpringboot />,
+  mysql: <SiMysql />,
+  git: <FaGitAlt />
 };
 
 function TopicCard({ topic }) {
